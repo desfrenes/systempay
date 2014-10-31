@@ -1,0 +1,10 @@
+*
+!.gitignore
+!LICENSE
+!AUTHORS
+!systempay/
+!systempay/**
+!requirements.txt
+!setup.py
+__pycache__/
+*.py[cod]

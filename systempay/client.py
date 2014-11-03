@@ -3,6 +3,7 @@ import hashlib
 import suds.client
 from datetime import datetime, date, time
 
+from .exceptions import SignatureError, SystempayError
 from .utils import get_factory_data, get_formatted_value, RESPONSE_SIGNATURE_KEYS
 
 
@@ -140,6 +141,26 @@ class SystempayMixin(object):
             response, keys=RESPONSE_SIGNATURE_KEYS)
 
         return computed_signature == response_signature
+
+    def check_response(self, response):
+        """
+        Checks the Systempay API response and raise an exception on error
+
+        :param response: The suds client response to check
+        :type response: `suds.sudsobject.identResponse`
+        """
+        if not self.response_is_valid(response):
+            raise SignatureError("Response signature is not valid", response)
+
+        error_code = getattr(response, 'errorCode', 0)
+        extended_error_code = getattr(response, 'extendedErrorCode', 0)
+
+        if error_code != 0:
+            raise SystempayError(
+                "Systempay Error (code: %s)" % error_code,
+                error_code,
+                extended_error_code,
+                response)
 
 
 class Client(SystempayMixin, suds.client.Client):

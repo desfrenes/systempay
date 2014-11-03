@@ -196,4 +196,3 @@ class Client(SystempayMixin, suds.client.Client):
         """
         SystempayMixin.__init__(self, shop_id, certificate, context, tz)
         suds.client.Client.__init__(self, url, **kwargs)
-

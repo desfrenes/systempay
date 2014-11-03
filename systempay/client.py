@@ -149,7 +149,7 @@ class SystempayMixin(object):
         :rtype: bool
         """
         response_signature = getattr(response, 'signature', None)
-        computed_signature = self.get_signature(
+        computed_signature = self.get_factory_signature(
             response, keys=RESPONSE_SIGNATURE_KEYS)
 
         return computed_signature == response_signature

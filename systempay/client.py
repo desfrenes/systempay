@@ -1,6 +1,7 @@
 import pytz
 import hashlib
 import suds.client
+from datetime import datetime, date, time
 
 from .utils import get_factory_data, get_formatted_value, RESPONSE_SIGNATURE_KEYS
 
@@ -95,6 +96,10 @@ class SystempayMixin(object):
         :returns: The formatted datetime in format like '2014-12-30T10:00:00+01:00'
         :rtype: str
         """
+        # Convert datetime.date instance to datetime objects
+        if type(dt) is date:
+            dt = datetime.combine(dt, time.min)
+
         tz_aware = tz.localize(dt).replace(microsecond=0)
         return tz_aware.isoformat()
 

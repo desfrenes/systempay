@@ -1,5 +1,5 @@
 from unittest import TestCase
-from datetime import datetime
+from datetime import datetime, date
 
 from .client import SystempayMixin, TEST
 from .utils import get_formatted_value
@@ -17,6 +17,10 @@ class SystempayTestCase(TestCase):
             m.get_local_datetime_format(datetime(2014, 10, 1, 12, 50, 25)),
             '2014-10-01T12:50:25+02:00')
 
+        self.assertEqual(
+            m.get_local_datetime_format(date(2014, 10, 30)),
+            '2014-10-30T00:00:00+01:00')
+
         # DST
         self.assertEqual(
             m.get_local_datetime_format(datetime(2014, 10, 30, 12, 50, 25)),
@@ -33,6 +37,10 @@ class SystempayTestCase(TestCase):
             '2014-10-01T12:50:25+00:00')
 
         self.assertEqual(
+            m.get_utc_datetime_format(date(2014, 10, 30)),
+            '2014-10-30T00:00:00+00:00')
+
+        self.assertEqual(
             m.get_utc_datetime_format(datetime(2014, 10, 30, 0, 0, 0)),
             '2014-10-30T00:00:00+00:00')
 
@@ -46,6 +54,10 @@ class SystempayTestCase(TestCase):
 
         self.assertEqual(
             get_formatted_value(datetime(2014, 10, 1, 12, 50, 25)),
+            '20141001')
+
+        self.assertEqual(
+            get_formatted_value(datetime(2014, 10, 1)),
             '20141001')
 
         self.assertEqual(

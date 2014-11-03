@@ -96,7 +96,7 @@ class SystempayMixin(object):
         if hasattr(factory, 'ctxMode'):
             factory.ctxMode = self.context
 
-        return self.get_signature(factory, keys, excludes)
+        return self.get_factory_signature(factory, keys, excludes)
 
     def __get_localized_datetime_format(self, dt, tz):
         """

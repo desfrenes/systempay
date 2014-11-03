@@ -35,7 +35,28 @@ class SystempayMixin(object):
         self.context = context
         self.tz = pytz.timezone(tz)
 
-    def get_signature(self, factory, keys=None, excludes=None):
+    def get_signature(self, values):
+        """
+        Returns the signature for given values
+
+        :param values: Values to calculate signature from
+        :type values: list
+        :returns: The SHA1 of the values signature
+        :rtype: str
+        """
+        sha = hashlib.sha1()
+
+        # Create signature string
+        signature = '+'.join(get_formatted_value(v) for v in values)
+
+        # Append certificate
+        signature += '+' + str(self.certificate)
+
+        # Return signature string sha1
+        sha.update(signature.encode())
+        return sha.hexdigest()
+
+    def get_factory_signature(self, factory, keys=None, excludes=None):
         """
         Returns the factory signature
 
@@ -49,19 +70,10 @@ class SystempayMixin(object):
         :returns: The SHA1 of the factory signature
         :rtype: str
         """
-        sha = hashlib.sha1()
         factory_data = get_factory_data(factory, keys, excludes)
+        factory_values = list(zip(*factory_data))[1]
 
-        # Create signature string
-        signature = '+'.join(
-            get_formatted_value(v) for v in list(zip(*factory_data))[1])
-
-        # Append certificate
-        signature += '+' + str(self.certificate)
-
-        # Return signature string sha1
-        sha.update(signature.encode())
-        return sha.hexdigest()
+        return self.get_signature(factory_values)
 
     def format_and_get_signature(self, factory, keys=None, excludes=None):
         """

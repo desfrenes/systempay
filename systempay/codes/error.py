@@ -79,6 +79,3 @@ INVALID_REQUEST_ID = 98
 
 OTHER = 99
 SENSITIVE_DATA = 999
-
-
-# Extended error codes

@@ -12,6 +12,7 @@ setup(
     url='',
     packages=[
         'systempay'
+        'systempay.codes'
     ],
     install_requires=[
         'pytz==2014.7',

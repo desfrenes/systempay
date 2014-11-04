@@ -170,8 +170,8 @@ class SystempayMixin(object):
         if error_code != 0:
             raise SystempayError(
                 "Systempay Error (code: %s)" % error_code,
-                error_code,
-                extended_error_code,
+                int(error_code),
+                int(extended_error_code),
                 response)
 
 

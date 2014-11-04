@@ -11,7 +11,7 @@ setup(
     author_email='contact@jurismarches.com',
     url='',
     packages=[
-        'systempay'
+        'systempay',
         'systempay.codes'
     ],
     install_requires=[

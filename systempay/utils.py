@@ -16,7 +16,9 @@ SIGNATURE_EXCLUDES = {
     'identCreationInfo': [
         'customerStatus',
         'customerAddressNumber',
-        'customerDistrict'
+        'customerDistrict',
+        'customerFirstName',
+        'customerLegalName'
     ]
 }
 

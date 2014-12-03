@@ -167,12 +167,6 @@ class SystempayMixin(object):
         error_code = getattr(response, 'errorCode', '0')
         extended_error_code = getattr(response, 'extendedErrorCode', '0')
 
-        if error_code.isdigit():
-            error_code = int(error_code)
-
-        if extended_error_code.isdigit():
-            extended_error_code = int(extended_error_code)
-
         if error_code != 0:
             raise SystempayError(
                 "Systempay Error (code: %s)" % error_code,

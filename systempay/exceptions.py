@@ -4,7 +4,7 @@ class SignatureError(Exception):
     Systempay signature check error
     """
     def __init__(self, message, response):
-        super(SystempayError, self).__init__(message)
+        super(SignatureError, self).__init__(message)
 
         self.response = response
 

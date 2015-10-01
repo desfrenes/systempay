@@ -111,7 +111,7 @@ def get_formatted_value(value):
 
     # Datetime format
     if isinstance(value, datetime):
-        return value.strftime('%Y%m%d')
+        return value.astimezone(pytz.UTC).strftime('%Y%m%d')
 
     # String datetime format
     try:

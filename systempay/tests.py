@@ -1,3 +1,4 @@
+import pytz
 from unittest import TestCase
 from datetime import datetime, date
 
@@ -48,16 +49,22 @@ class SystempayTestCase(TestCase):
         """
         Test formatted value for signature calculation
         """
+        localized = lambda d: pytz.timezone("Europe/Paris").localize(d)
+
         self.assertEqual(
             get_formatted_value(1),
             '1')
 
         self.assertEqual(
-            get_formatted_value(datetime(2014, 10, 1, 12, 50, 25)),
+            get_formatted_value(datetime(2014, 10, 1, 12, 50, 25, tzinfo=pytz.utc)),
             '20141001')
 
         self.assertEqual(
-            get_formatted_value(datetime(2014, 10, 1)),
+            get_formatted_value(localized(datetime(2014, 10, 10, 00, 10))),
+            '20141009')
+
+        self.assertEqual(
+            get_formatted_value(datetime(2014, 10, 1, tzinfo=pytz.utc)),
             '20141001')
 
         self.assertEqual(
